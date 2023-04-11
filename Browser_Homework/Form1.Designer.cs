@@ -32,15 +32,21 @@
             search_engine_toolStrip = new ToolStrip();
             back_btn = new ToolStripButton();
             forward_btn = new ToolStripButton();
+            stop_refresh = new ToolStripButton();
             update_btn = new ToolStripButton();
             search_string_tb = new ToolStripTextBox();
             search_btn = new ToolStripButton();
             plus_btn = new ToolStripButton();
             minus_btn = new ToolStripButton();
+            markers_btn = new ToolStripButton();
+            probel = new ToolStripLabel();
+            extra = new ToolStripDropDownButton();
+            markers_show_btn = new ToolStripMenuItem();
+            history_show_btn = new ToolStripMenuItem();
+            save_btn = new ToolStripMenuItem();
             tabControl = new TabControl();
-            mainpanel = new Panel();
             toolStrip1 = new ToolStrip();
-            panel = new FlowLayoutPanel();
+            mainpanel = new Panel();
             mainpicture = new PictureBox();
             search_engine_toolStrip.SuspendLayout();
             mainpanel.SuspendLayout();
@@ -51,11 +57,11 @@
             // 
             search_engine_toolStrip.BackColor = Color.FromArgb(226, 232, 223);
             search_engine_toolStrip.ImageScalingSize = new Size(32, 32);
-            search_engine_toolStrip.Items.AddRange(new ToolStripItem[] { back_btn, forward_btn, update_btn, search_string_tb, search_btn, plus_btn, minus_btn });
+            search_engine_toolStrip.Items.AddRange(new ToolStripItem[] { back_btn, forward_btn, stop_refresh, update_btn, search_string_tb, search_btn, plus_btn, minus_btn, markers_btn, probel, extra });
             search_engine_toolStrip.Location = new Point(0, 0);
             search_engine_toolStrip.Name = "search_engine_toolStrip";
             search_engine_toolStrip.Padding = new Padding(0, 0, 4, 0);
-            search_engine_toolStrip.Size = new Size(1378, 42);
+            search_engine_toolStrip.Size = new Size(1438, 42);
             search_engine_toolStrip.TabIndex = 0;
             search_engine_toolStrip.Text = "toolStrip1";
             // 
@@ -67,6 +73,7 @@
             back_btn.Name = "back_btn";
             back_btn.Size = new Size(46, 36);
             back_btn.Text = "toolStripButton1";
+            back_btn.ToolTipText = "Назад";
             back_btn.Click += back_btn_Click;
             // 
             // forward_btn
@@ -77,7 +84,18 @@
             forward_btn.Name = "forward_btn";
             forward_btn.Size = new Size(46, 36);
             forward_btn.Text = "toolStripButton2";
+            forward_btn.ToolTipText = "Вернуться";
             forward_btn.Click += forward_btn_Click;
+            // 
+            // stop_refresh
+            // 
+            stop_refresh.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            stop_refresh.Image = (Image)resources.GetObject("stop_refresh.Image");
+            stop_refresh.ImageTransparentColor = Color.Magenta;
+            stop_refresh.Name = "stop_refresh";
+            stop_refresh.Size = new Size(46, 36);
+            stop_refresh.Text = "toolStripButton1";
+            stop_refresh.Click += cansel_btn_Click;
             // 
             // update_btn
             // 
@@ -107,6 +125,7 @@
             search_btn.Name = "search_btn";
             search_btn.Size = new Size(46, 36);
             search_btn.Text = "toolStripButton5";
+            search_btn.ToolTipText = "Поиск";
             search_btn.Click += search_btn_Click;
             // 
             // plus_btn
@@ -117,6 +136,7 @@
             plus_btn.Name = "plus_btn";
             plus_btn.Size = new Size(46, 36);
             plus_btn.Text = "toolStripButton6";
+            plus_btn.ToolTipText = "Добавить вкладку";
             plus_btn.Click += plus_btn_Click;
             // 
             // minus_btn
@@ -127,7 +147,57 @@
             minus_btn.Name = "minus_btn";
             minus_btn.Size = new Size(46, 36);
             minus_btn.Text = "toolStripButton7";
+            minus_btn.ToolTipText = "Удалить вкладку";
             minus_btn.Click += minus_btn_Click;
+            // 
+            // markers_btn
+            // 
+            markers_btn.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            markers_btn.Image = (Image)resources.GetObject("markers_btn.Image");
+            markers_btn.ImageTransparentColor = Color.Magenta;
+            markers_btn.Name = "markers_btn";
+            markers_btn.Size = new Size(46, 36);
+            markers_btn.Text = "toolStripButton1";
+            markers_btn.ToolTipText = "Добавить в закладки";
+            markers_btn.Click += markers_btn_Click;
+            // 
+            // probel
+            // 
+            probel.Name = "probel";
+            probel.Size = new Size(84, 36);
+            probel.Text = "          ";
+            // 
+            // extra
+            // 
+            extra.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            extra.DropDownItems.AddRange(new ToolStripItem[] { markers_show_btn, history_show_btn, save_btn });
+            extra.Image = (Image)resources.GetObject("extra.Image");
+            extra.ImageTransparentColor = Color.Magenta;
+            extra.Name = "extra";
+            extra.Size = new Size(54, 36);
+            extra.Text = "toolStripDropDownButton1";
+            extra.ToolTipText = "Дополнительно";
+            // 
+            // markers_show_btn
+            // 
+            markers_show_btn.Name = "markers_show_btn";
+            markers_show_btn.Size = new Size(386, 44);
+            markers_show_btn.Text = "Закладки";
+            markers_show_btn.Click += markers_menuitem_Click;
+            // 
+            // history_show_btn
+            // 
+            history_show_btn.Name = "history_show_btn";
+            history_show_btn.Size = new Size(386, 44);
+            history_show_btn.Text = "История просмтра";
+            history_show_btn.Click += history_menuitem_Click;
+            // 
+            // save_btn
+            // 
+            save_btn.Name = "save_btn";
+            save_btn.Size = new Size(386, 44);
+            save_btn.Text = "Сохранить страницу...";
+            save_btn.Click += Save_btn_Click;
             // 
             // tabControl
             // 
@@ -135,60 +205,52 @@
             tabControl.Location = new Point(0, 45);
             tabControl.Name = "tabControl";
             tabControl.SelectedIndex = 0;
-            tabControl.Size = new Size(1378, 884);
+            tabControl.Size = new Size(1438, 858);
             tabControl.TabIndex = 1;
-            // 
-            // mainpanel
-            // 
-            mainpanel.BackColor = SystemColors.ButtonHighlight;
-            mainpanel.Controls.Add(toolStrip1);
-            mainpanel.Controls.Add(panel);
-            mainpanel.Controls.Add(mainpicture);
-            mainpanel.Location = new Point(0, 45);
-            mainpanel.Name = "mainpanel";
-            mainpanel.Size = new Size(1378, 884);
-            mainpanel.TabIndex = 3;
             // 
             // toolStrip1
             // 
             toolStrip1.ImageScalingSize = new Size(32, 32);
             toolStrip1.Location = new Point(0, 0);
             toolStrip1.Name = "toolStrip1";
-            toolStrip1.Size = new Size(1378, 25);
+            toolStrip1.Size = new Size(1438, 25);
             toolStrip1.TabIndex = 4;
             toolStrip1.Text = "toolStrip1";
             // 
-            // panel
+            // mainpanel
             // 
-            panel.BackColor = Color.FromArgb(226, 232, 223);
-            panel.Location = new Point(0, 831);
-            panel.Name = "panel";
-            panel.Size = new Size(1452, 28);
-            panel.TabIndex = 3;
+            mainpanel.BackColor = SystemColors.ButtonHighlight;
+            mainpanel.Controls.Add(mainpicture);
+            mainpanel.Controls.Add(toolStrip1);
+            mainpanel.Dock = DockStyle.Fill;
+            mainpanel.Location = new Point(0, 0);
+            mainpanel.Name = "mainpanel";
+            mainpanel.Size = new Size(1438, 903);
+            mainpanel.TabIndex = 3;
             // 
             // mainpicture
             // 
+            mainpicture.Dock = DockStyle.Fill;
             mainpicture.Image = (Image)resources.GetObject("mainpicture.Image");
-            mainpicture.Location = new Point(203, 191);
+            mainpicture.Location = new Point(0, 25);
             mainpicture.Name = "mainpicture";
-            mainpicture.Size = new Size(890, 336);
-            mainpicture.TabIndex = 2;
+            mainpicture.Size = new Size(1438, 878);
+            mainpicture.TabIndex = 5;
             mainpicture.TabStop = false;
             // 
             // Browser
             // 
             AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1378, 929);
+            ClientSize = new Size(1438, 903);
             Controls.Add(search_engine_toolStrip);
-            Controls.Add(tabControl);
             Controls.Add(mainpanel);
+            Controls.Add(tabControl);
             FormBorderStyle = FormBorderStyle.Fixed3D;
             Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(4, 2, 4, 2);
             Name = "Browser";
             Text = "Web-браузер";
-            Activated += activate;
             search_engine_toolStrip.ResumeLayout(false);
             search_engine_toolStrip.PerformLayout();
             mainpanel.ResumeLayout(false);
@@ -209,9 +271,15 @@
         private ToolStripButton plus_btn;
         private ToolStripButton minus_btn;
         private TabControl tabControl;
+        private ToolStripLabel probel;
+        private ToolStripDropDownButton extra;
+        private ToolStripMenuItem markers_show_btn;
+        private ToolStripMenuItem history_show_btn;
+        private ToolStripMenuItem save_btn;
+        private ToolStripButton markers_btn;
+        private ToolStripButton stop_refresh;
+        private ToolStrip toolStrip1;
         private Panel mainpanel;
         private PictureBox mainpicture;
-        private FlowLayoutPanel panel;
-        private ToolStrip toolStrip1;
     }
 }

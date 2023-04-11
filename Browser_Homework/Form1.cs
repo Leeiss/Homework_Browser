@@ -1,5 +1,8 @@
 using System.Diagnostics.Eventing.Reader;
 using System.Windows.Forms;
+using System.Xml.Linq;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using System.Xml;
 
 namespace Browser_Homework
 {
@@ -7,23 +10,25 @@ namespace Browser_Homework
     {
         int i = 0;
         public Browser()
-        //еще добавить:
-        //остановка загрузки страницы
-        //анкор
-        //сохаранение истории просмотров
-        //очистка истории просмотра страниц
-        //сохранение открытой страницы на диске
+
+        //дата в истории поиска
+
         {
             InitializeComponent();
-            panel.Visible = true;
             mainpicture.Visible = true;
             mainpanel.Visible = true;
             tabControl.Visible = false;
 
         }
+        public new string address
+        {
+
+            get { return search_string_tb.Text; }
+            set
+            { search_string_tb.Text = value; }
+        }
         private void plus_btn_Click(object sender, EventArgs e)
         {
-            panel.Visible = false;
             mainpicture.Visible = false;
             mainpanel.Visible = false;
             tabControl.Visible = true;
@@ -51,7 +56,6 @@ namespace Browser_Homework
         {
             if (search_string_tb.Text.Equals("https://www.Frogoogle.ru/"))
             {
-                panel.Visible = true;
                 mainpicture.Visible = true;
                 mainpanel.Visible = true;
                 tabControl.Visible = false;
@@ -60,7 +64,6 @@ namespace Browser_Homework
             {
 
                 MessageBox.Show("—трока пуста");
-                panel.Visible = false;
                 mainpicture.Visible = false;
                 mainpanel.Visible = false;
                 tabControl.Visible = true;
@@ -69,55 +72,60 @@ namespace Browser_Homework
             {
 
                 MessageBox.Show("ѕеред тем как сделать поиск, создайте вкладку");
-                panel.Visible = false;
                 mainpicture.Visible = false;
                 mainpanel.Visible = false;
                 tabControl.Visible = true;
             }
             else
             {
-                try
-                {
-                    panel.Visible = false;
-                    mainpicture.Visible = false;
-                    mainpanel.Visible = false;
-                    tabControl.Visible = true;
+                mainpicture.Visible = false;
+                mainpanel.Visible = false;
+                tabControl.Visible = true;
+                ((WebBrowser)tabControl.SelectedTab.Controls[0]).Navigate(search_string_tb.Text);
+                var xmlDoc = XDocument.Load(Path.Combine(Environment.CurrentDirectory, @"C:\\Users\\farra\\source\\repos\\Browser_Homework\\Browser_Homework\\History.xml"));
+                xmlDoc.Element("urls").Add(new XElement("url"), new XElement("address", search_string_tb.Text), new XElement("date", DateTime.Now));
+                xmlDoc.Save(Path.Combine(Environment.CurrentDirectory, @"C:\\Users\\farra\\source\\repos\\Browser_Homework\\Browser_Homework\\History.xml"));
 
-                    ((WebBrowser)tabControl.SelectedTab.Controls[0]).Navigate(search_string_tb.Text);
-                }
-                catch
-                {
-                    MessageBox.Show("“акой страницы не существует");
-                }
+
             }
-        }
-
-        private void activate(object sender, EventArgs e)
-        {
-
         }
 
         private void back_btn_Click(object sender, EventArgs e)
         {
-            if (String.IsNullOrEmpty(search_string_tb.Text) || search_string_tb.Text.Length > search_string_tb.MaxLength)
+            if (tabControl.SelectedTab == null)
             {
-                MessageBox.Show("ќшибка");
+                MessageBox.Show("¬ы не можете отменить действие,так как ранее не совершали действий");
             }
             else
             {
-
                 ((WebBrowser)tabControl.SelectedTab.Controls[0]).GoBack();
+
             }
         }
 
         private void forward_btn_Click(object sender, EventArgs e)
         {
-            ((WebBrowser)tabControl.SelectedTab.Controls[0]).GoForward();
+            if (tabControl.SelectedTab == null)
+            {
+                MessageBox.Show("¬ы не можете вернутьс€ назад, так как ранее не совершали действий");
+            }
+            else
+            {
+                ((WebBrowser)tabControl.SelectedTab.Controls[0]).GoForward();
+
+            }
         }
 
         private void update_btn_Click(object sender, EventArgs e)
         {
-            ((WebBrowser)tabControl.SelectedTab.Controls[0]).Refresh();
+            if (tabControl.SelectedTab == null)
+            {
+                MessageBox.Show("ƒл€ обновлени€ сначала откройте страницу");
+            }
+            else
+            {
+                ((WebBrowser)tabControl.SelectedTab.Controls[0]).Refresh();
+            }
         }
 
         private void minus_btn_Click(object sender, EventArgs e)
@@ -138,7 +146,6 @@ namespace Browser_Homework
             {
                 if (search_string_tb.Text.Equals("https://www.Frogoogle.ru/"))
                 {
-                    panel.Visible = true;
                     mainpicture.Visible = true;
                     mainpanel.Visible = true;
                     tabControl.Visible = false;
@@ -147,7 +154,7 @@ namespace Browser_Homework
                 {
 
                     MessageBox.Show("—трока пуста");
-                    panel.Visible = false;
+                    
                     mainpicture.Visible = false;
                     mainpanel.Visible = false;
                     tabControl.Visible = true;
@@ -156,7 +163,7 @@ namespace Browser_Homework
                 {
 
                     MessageBox.Show("ѕеред тем как сделать поиск, создайте вкладку");
-                    panel.Visible = false;
+                   
                     mainpicture.Visible = false;
                     mainpanel.Visible = false;
                     tabControl.Visible = true;
@@ -165,7 +172,7 @@ namespace Browser_Homework
                 {
                     try
                     {
-                        panel.Visible = false;
+                        
                         mainpicture.Visible = false;
                         mainpanel.Visible = false;
                         tabControl.Visible = true;
@@ -178,6 +185,60 @@ namespace Browser_Homework
                     }
                 }
             }
+
+        }
+        private void Browser_MouseDown(object sender, MouseEventArgs e)
+        {
+
+        }
+
+        private void markers_menuitem_Click(object sender, EventArgs e)
+        {
+            Markers markers = new Markers();
+            markers.Show();
+        }
+
+        private void history_menuitem_Click(object sender, EventArgs e)
+        {
+            History history = new History();
+            history.Show();
+        }
+
+        private void cansel_btn_Click(object sender, EventArgs e)
+        {
+            if (tabControl.SelectedTab == null)
+            {
+                MessageBox.Show("ƒл€ остановки загрузки страницы сначала откройте ее");
+            }
+            else
+            {
+                ((WebBrowser)tabControl.SelectedTab.Controls[0]).Stop();
+            }
+        }
+
+        private void markers_btn_Click(object sender, EventArgs e)
+        {
+            var xmlDoc = XDocument.Load(Path.Combine(Environment.CurrentDirectory, @"C:\\Users\\farra\\source\\repos\\Browser_Homework\\Browser_Homework\\Markers.xml"));
+            xmlDoc.Element("markers").Add(new XElement("marker", new XAttribute("address", search_string_tb)));
+
+
+            xmlDoc.Save(Path.Combine(Environment.CurrentDirectory, @"C:\\Users\\farra\\source\\repos\\Browser_Homework\\Browser_Homework\\Markers.xml"));
+        }
+
+        private void Save_btn_Click(object sender, EventArgs e)
+        {
+            if (tabControl.SelectedTab != null)
+            {
+                ((WebBrowser)tabControl.SelectedTab.Controls[0]).ShowSaveAsDialog();
+            }
+            else
+            {
+                MessageBox.Show("ƒл€ того чтобы сохранить страницу на диск, вам нужно на нее зайти");
+            }
+        }
+
+        private void tabControl_SelectedIndexChanged(object sender, EventArgs e)
+        {
 
         }
     }
