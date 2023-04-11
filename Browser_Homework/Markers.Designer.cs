@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Markers));
             panel = new FlowLayoutPanel();
             lbl_markers = new Label();
             markers_lb = new ListBox();
@@ -102,6 +103,7 @@
             Controls.Add(markers_lb);
             Controls.Add(lbl_markers);
             Controls.Add(panel);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             MaximumSize = new Size(949, 1052);
             Name = "Markers";
             Text = "Мои закладки";

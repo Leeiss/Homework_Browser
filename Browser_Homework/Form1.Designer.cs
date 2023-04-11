@@ -189,7 +189,7 @@
             // 
             history_show_btn.Name = "history_show_btn";
             history_show_btn.Size = new Size(386, 44);
-            history_show_btn.Text = "История просмтра";
+            history_show_btn.Text = "История просмотра";
             history_show_btn.Click += history_menuitem_Click;
             // 
             // save_btn

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(History));
             show_btn = new Button();
             addresses_lb = new ListBox();
             lbl_history = new Label();
@@ -102,9 +103,10 @@
             Controls.Add(addresses_lb);
             Controls.Add(lbl_history);
             Controls.Add(panel);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             MaximumSize = new Size(958, 1131);
             Name = "History";
-            Text = "History";
+            Text = "История посещенных страниц";
             Load += History_Load;
             ResumeLayout(false);
             PerformLayout();
