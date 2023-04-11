@@ -94,7 +94,7 @@
             stop_refresh.ImageTransparentColor = Color.Magenta;
             stop_refresh.Name = "stop_refresh";
             stop_refresh.Size = new Size(46, 36);
-            stop_refresh.Text = "toolStripButton1";
+            stop_refresh.Text = "Отменить обновление";
             stop_refresh.Click += cansel_btn_Click;
             // 
             // update_btn
@@ -104,7 +104,7 @@
             update_btn.ImageTransparentColor = Color.Magenta;
             update_btn.Name = "update_btn";
             update_btn.Size = new Size(46, 36);
-            update_btn.Text = "toolStripButton3";
+            update_btn.Text = "Обновить";
             update_btn.Click += update_btn_Click;
             // 
             // search_string_tb
@@ -124,7 +124,7 @@
             search_btn.ImageTransparentColor = Color.Magenta;
             search_btn.Name = "search_btn";
             search_btn.Size = new Size(46, 36);
-            search_btn.Text = "toolStripButton5";
+            search_btn.Text = "Поиск";
             search_btn.ToolTipText = "Поиск";
             search_btn.Click += search_btn_Click;
             // 
@@ -135,7 +135,7 @@
             plus_btn.ImageTransparentColor = Color.Magenta;
             plus_btn.Name = "plus_btn";
             plus_btn.Size = new Size(46, 36);
-            plus_btn.Text = "toolStripButton6";
+            plus_btn.Text = "Добавить вкладку";
             plus_btn.ToolTipText = "Добавить вкладку";
             plus_btn.Click += plus_btn_Click;
             // 
@@ -146,7 +146,7 @@
             minus_btn.ImageTransparentColor = Color.Magenta;
             minus_btn.Name = "minus_btn";
             minus_btn.Size = new Size(46, 36);
-            minus_btn.Text = "toolStripButton7";
+            minus_btn.Text = "Удалить вкладку";
             minus_btn.ToolTipText = "Удалить вкладку";
             minus_btn.Click += minus_btn_Click;
             // 
@@ -157,7 +157,7 @@
             markers_btn.ImageTransparentColor = Color.Magenta;
             markers_btn.Name = "markers_btn";
             markers_btn.Size = new Size(46, 36);
-            markers_btn.Text = "toolStripButton1";
+            markers_btn.Text = "Добавить в закладки";
             markers_btn.ToolTipText = "Добавить в закладки";
             markers_btn.Click += markers_btn_Click;
             // 
@@ -175,7 +175,7 @@
             extra.ImageTransparentColor = Color.Magenta;
             extra.Name = "extra";
             extra.Size = new Size(54, 36);
-            extra.Text = "toolStripDropDownButton1";
+            extra.Text = "Дополнительно";
             extra.ToolTipText = "Дополнительно";
             // 
             // markers_show_btn

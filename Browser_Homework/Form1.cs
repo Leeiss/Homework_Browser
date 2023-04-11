@@ -154,7 +154,7 @@ namespace Browser_Homework
                 {
 
                     MessageBox.Show("Строка пуста");
-                    
+
                     mainpicture.Visible = false;
                     mainpanel.Visible = false;
                     tabControl.Visible = true;
@@ -163,7 +163,7 @@ namespace Browser_Homework
                 {
 
                     MessageBox.Show("Перед тем как сделать поиск, создайте вкладку");
-                   
+
                     mainpicture.Visible = false;
                     mainpanel.Visible = false;
                     tabControl.Visible = true;
@@ -172,7 +172,7 @@ namespace Browser_Homework
                 {
                     try
                     {
-                        
+
                         mainpicture.Visible = false;
                         mainpanel.Visible = false;
                         tabControl.Visible = true;
