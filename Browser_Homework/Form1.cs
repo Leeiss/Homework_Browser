@@ -11,8 +11,6 @@ namespace Browser_Homework
         int i = 0;
         public Browser()
 
-        //дата в истории поиска
-
         {
             InitializeComponent();
             mainpicture.Visible = true;
@@ -27,6 +25,8 @@ namespace Browser_Homework
             set
             { search_string_tb.Text = value; }
         }
+        string HistoryDocXml = @".\..\..\..\History.xml";
+        string MarkersDocXml = @".\..\..\..\Markers.xml";
         private void plus_btn_Click(object sender, EventArgs e)
         {
             mainpicture.Visible = false;
@@ -81,12 +81,10 @@ namespace Browser_Homework
                 mainpicture.Visible = false;
                 mainpanel.Visible = false;
                 tabControl.Visible = true;
-                ((WebBrowser)tabControl.SelectedTab.Controls[0]).Navigate(search_string_tb.Text);
-                var xmlDoc = XDocument.Load(Path.Combine(Environment.CurrentDirectory, @"C:\\Users\\farra\\source\\repos\\Browser_Homework\\Browser_Homework\\History.xml"));
+                ((WebBrowser)tabControl.SelectedTab.Controls[0]).Navigate(search_string_tb.Text); 
+                var xmlDoc = XDocument.Load(Path.Combine(Environment.CurrentDirectory, HistoryDocXml));
                 xmlDoc.Element("urls").Add(new XElement("url"), new XElement("address", search_string_tb.Text), new XElement("date", DateTime.Now));
-                xmlDoc.Save(Path.Combine(Environment.CurrentDirectory, @"C:\\Users\\farra\\source\\repos\\Browser_Homework\\Browser_Homework\\History.xml"));
-
-
+                xmlDoc.Save(Path.Combine(Environment.CurrentDirectory, HistoryDocXml));
             }
         }
 
@@ -187,11 +185,6 @@ namespace Browser_Homework
             }
 
         }
-        private void Browser_MouseDown(object sender, MouseEventArgs e)
-        {
-
-        }
-
         private void markers_menuitem_Click(object sender, EventArgs e)
         {
             Markers markers = new Markers();
@@ -218,11 +211,19 @@ namespace Browser_Homework
 
         private void markers_btn_Click(object sender, EventArgs e)
         {
-            var xmlDoc = XDocument.Load(Path.Combine(Environment.CurrentDirectory, @"C:\\Users\\farra\\source\\repos\\Browser_Homework\\Browser_Homework\\Markers.xml"));
-            xmlDoc.Element("markers").Add(new XElement("marker", new XAttribute("address", search_string_tb)));
+            if (search_string_tb.Text != "")
+            {
+                var xmlDoc = XDocument.Load(Path.Combine(Environment.CurrentDirectory, MarkersDocXml));
+                xmlDoc.Element("markers").Add(new XElement("marker", new XAttribute("address", search_string_tb)));
+                xmlDoc.Save(Path.Combine(Environment.CurrentDirectory, MarkersDocXml));
+            }
+            else
+            {
+                MessageBox.Show("Сначала откройте какую-нибудь страницу");
+            }
 
 
-            xmlDoc.Save(Path.Combine(Environment.CurrentDirectory, @"C:\\Users\\farra\\source\\repos\\Browser_Homework\\Browser_Homework\\Markers.xml"));
+           
         }
 
         private void Save_btn_Click(object sender, EventArgs e)
@@ -237,9 +238,5 @@ namespace Browser_Homework
             }
         }
 
-        private void tabControl_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
     }
 }

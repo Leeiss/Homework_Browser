@@ -24,12 +24,13 @@ namespace Browser_Homework
         {
 
         }
-        string xmlPath = @"C:\\Users\\farra\\source\\repos\\Browser_Homework\\Browser_Homework\\History.xml";
+        string HistoryDocXml = @".\..\..\..\History.xml";
+        
         private void History_Load(object sender, EventArgs e)
         {
             try
             {
-                XDocument doc = XDocument.Load(xmlPath);
+                XDocument doc = XDocument.Load(HistoryDocXml);
                 foreach (XElement item in doc.Descendants("urls").Elements("address"))
                 {
                     var val = item.Value;
@@ -41,10 +42,6 @@ namespace Browser_Homework
                 MessageBox.Show("Ваша история просмотра страниц пуста");
             }
         }
-
-
-
-
         private void show_btn_Click(object sender, EventArgs e)
         {
             Browser browser = new Browser()
@@ -57,12 +54,12 @@ namespace Browser_Homework
         {
             addresses_lb.Items.Clear();
             XmlDocument doc = new XmlDocument();
-            doc.Load(@"C:\\Users\\farra\\source\\repos\\Browser_Homework\\Browser_Homework\\History.xml");
+            doc.Load(HistoryDocXml);
             foreach (XmlNode node in doc.ChildNodes)
             {
                 node.RemoveAll();
             }
-            doc.Save(@"C:\\Users\\farra\\source\\repos\\Browser_Homework\\Browser_Homework\\History.xml");
+            doc.Save(HistoryDocXml);
         }
     }
 }

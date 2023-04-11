@@ -18,13 +18,13 @@ namespace Browser_Homework
         {
             InitializeComponent();
         }
-        string xmlPath = @"C:\Users\farra\source\repos\Browser_Homework\Browser_Homework\Markers.xml";
+        string MarkersDocXml = @".\..\..\..\Markers.xml";
         private void Markers_Load(object sender, EventArgs e)
         {
             try
             {
                 XmlDocument xDoc = new XmlDocument();
-                xDoc.Load(@"C:\Users\farra\source\repos\Browser_Homework\Browser_Homework\Markers.xml");
+                xDoc.Load(MarkersDocXml);
                 XmlElement xRoot = xDoc.DocumentElement;
                 foreach (XmlElement xnode in xRoot)
                 {
@@ -50,9 +50,9 @@ namespace Browser_Homework
         {
             string address = markers_lb.SelectedItem.ToString();
             markers_lb.Items.RemoveAt(markers_lb.SelectedIndex);
-            var xmlDoc = XDocument.Load(Path.Combine(Environment.CurrentDirectory, @"C:\\Users\\farra\\source\\repos\\Browser_Homework\\Browser_Homework\\Markers.xml"));
+            var xmlDoc = XDocument.Load(Path.Combine(Environment.CurrentDirectory, MarkersDocXml));
             xmlDoc.Element("markers").Elements("marker").Where(x => x.Attribute("address").Value == address).FirstOrDefault().Remove();
-            xmlDoc.Save(Path.Combine(Environment.CurrentDirectory, @"C:\\Users\\farra\\source\\repos\\Browser_Homework\\Browser_Homework\\Markers.xml"));
+            xmlDoc.Save(Path.Combine(Environment.CurrentDirectory, MarkersDocXml));
 
         }
         private void markers_lb_SelectedIndexChanged(object sender, EventArgs e)
