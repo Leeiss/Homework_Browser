@@ -18,3 +18,16 @@
   
 :frog: сохранение открытой страницы на диске. 
   
+###### Окно при входе в приложение
+<img src="https://github.com/Leeiss/Homework_Browser/blob/master/%D0%94%D0%BB%D1%8F%20readme/%D0%93%D0%BB%D0%B0%D0%B2%D0%BD%D0%BE%D0%B5%20%D0%BE%D0%BA%D0%BD%D0%BE.png" alt="Основное окно" width="850"/>
+  
+_______
+Для совершения поиска сначала нужно создать новую вкладку
+###### Также мы можем добавить страницу в закладки:
+  ###### Так выглядит приложенеие с открытой одной / несколькими вкладками:
+<img src="https://github.com/Leeiss/Homework_Browser/blob/master/%D0%94%D0%BB%D1%8F%20readme/%D0%B7%D0%B0%D0%BA%D0%BB%D0%B0%D0%B4%D0%BA%D0%B8%20%D0%B8%20%D0%B8%D1%81%D1%82%D0%BE%D1%80%D0%B8%D1%8F%20%D0%BF%D1%80%D0%BE%D1%81%D0%BC%D0%BE%D1%82%D1%80%D0%B0.png" alt="История просмотра и закладки" width="1500"/>
+
+
+
+
+  
