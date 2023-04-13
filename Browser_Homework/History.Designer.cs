@@ -58,6 +58,7 @@
             addresses_lb.Name = "addresses_lb";
             addresses_lb.Size = new Size(717, 779);
             addresses_lb.TabIndex = 12;
+            addresses_lb.SelectedIndexChanged += addresses_lb_SelectedIndexChanged;
             // 
             // lbl_history
             // 

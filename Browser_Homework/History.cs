@@ -25,21 +25,39 @@ namespace Browser_Homework
 
         }
         string HistoryDocXml = @".\..\..\..\History.xml";
-        
+
         private void History_Load(object sender, EventArgs e)
         {
-            try
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.Load(HistoryDocXml);
+            XmlElement xmlRoot = xmlDoc.DocumentElement;
+
+            if (xmlRoot != null)
             {
-                XDocument doc = XDocument.Load(HistoryDocXml);
-                foreach (XElement item in doc.Descendants("urls").Elements("address"))
+                foreach (XmlElement xmlNode in xmlRoot)
                 {
-                    var val = item.Value;
-                    addresses_lb.Items.Add(val);
+                    for (int i = 0; i < xmlNode.ChildNodes.Count; i++)
+                    {
+                        if (xmlNode.ChildNodes[i].Name == "date")
+                        {
+                            DateTime dateRecord = DateTime.Parse(xmlNode.ChildNodes[i].InnerText.ToString());
+
+                            TimeSpan sevenDays = new TimeSpan(7, 0, 0, 0);
+
+                            if (dateRecord - DateTime.Now > sevenDays)
+                            {
+                                xmlRoot.RemoveChild(xmlRoot.ChildNodes[i]);
+                            }
+                        }
+                    }
                 }
             }
-            catch
+            xmlDoc.Load(HistoryDocXml);
+            XmlNodeList addressNodes = xmlDoc.SelectNodes("//address");
+            foreach (XmlNode addressNode in addressNodes)
             {
-                MessageBox.Show("Ваша история просмотра страниц пуста");
+                string addressValue = addressNode.InnerText;
+                addresses_lb.Items.Add(addressValue);
             }
         }
         private void show_btn_Click(object sender, EventArgs e)
@@ -60,6 +78,11 @@ namespace Browser_Homework
                 node.RemoveAll();
             }
             doc.Save(HistoryDocXml);
+        }
+
+        private void addresses_lb_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            show_btn.Visible = true;
         }
     }
 }

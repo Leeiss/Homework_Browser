@@ -3,17 +3,20 @@ using System.Windows.Forms;
 using System.Xml.Linq;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using System.Xml;
+using static System.Windows.Forms.LinkLabel;
 
 namespace Browser_Homework
 {
     public partial class Browser : Form
     {
         int i = 0;
+        
         public Browser()
 
         {
             InitializeComponent();
-            mainpicture.Visible = true;
+            logo_pixture.Visible = true;
+            lowpanel.Visible = true;
             mainpanel.Visible = true;
             tabControl.Visible = false;
 
@@ -27,9 +30,21 @@ namespace Browser_Homework
         }
         string HistoryDocXml = @".\..\..\..\History.xml";
         string MarkersDocXml = @".\..\..\..\Markers.xml";
+        private void Browser_Resize(object sender, EventArgs e)
+        {
+            int formWidth = this.ClientSize.Width;
+            int formHeight = this.ClientSize.Height;
+            int pictureBoxWidth = logo_pixture.Width;
+            int pictureBoxHeight = logo_pixture.Height;
+            int pictureBoxX = (formWidth - pictureBoxWidth) / 2;
+            int pictureBoxY = (formHeight - pictureBoxHeight) / 2;
+            logo_pixture.Location = new Point(pictureBoxX, pictureBoxY);
+            lowpanel.Location = new Point(formHeight + 5, formWidth - 5);
+        }
         private void plus_btn_Click(object sender, EventArgs e)
         {
-            mainpicture.Visible = false;
+            logo_pixture.Visible = false;
+            lowpanel.Visible = false;
             mainpanel.Visible = false;
             tabControl.Visible = true;
             WebBrowser web = new WebBrowser();
@@ -42,6 +57,33 @@ namespace Browser_Homework
             tabControl.SelectedTab.Controls.Add(web);
             i += 1;
         }
+        private void Historyxml(string address, DateTime date)
+        {
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.Load(HistoryDocXml);
+            XmlElement xmlRoot = xmlDoc.DocumentElement;
+
+            XmlElement recordElem = xmlDoc.CreateElement("url");
+
+            XmlElement linkElem = xmlDoc.CreateElement("address");
+            XmlElement dateElem = xmlDoc.CreateElement("date");
+
+            XmlText linkText = xmlDoc.CreateTextNode(address);
+            XmlText dateText = xmlDoc.CreateTextNode(date.ToString());
+
+            linkElem.AppendChild(linkText);
+            dateElem.AppendChild(dateText);
+
+            recordElem.AppendChild(linkElem);
+            recordElem.AppendChild(dateElem);
+
+            xmlRoot.AppendChild(recordElem);
+
+            xmlDoc.Save(HistoryDocXml);
+
+        }
+
+           
         void webDocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
         {
             tabControl.SelectedTab.Text = ((WebBrowser)tabControl.SelectedTab.Controls[0]).DocumentTitle;
@@ -51,12 +93,12 @@ namespace Browser_Homework
         {
             search_string_tb.Text = string.Empty;
         }
-
-        private void search_btn_Click(object sender, EventArgs e)
+        private void Searching()
         {
             if (search_string_tb.Text.Equals("https://www.Frogoogle.ru/"))
             {
-                mainpicture.Visible = true;
+                logo_pixture.Visible = true;
+                lowpanel.Visible = true;
                 mainpanel.Visible = true;
                 tabControl.Visible = false;
             }
@@ -64,7 +106,8 @@ namespace Browser_Homework
             {
 
                 MessageBox.Show("Строка пуста");
-                mainpicture.Visible = false;
+                logo_pixture.Visible = false;
+                lowpanel.Visible = false;
                 mainpanel.Visible = false;
                 tabControl.Visible = true;
             }
@@ -72,20 +115,24 @@ namespace Browser_Homework
             {
 
                 MessageBox.Show("Перед тем как сделать поиск, создайте вкладку");
-                mainpicture.Visible = false;
+                logo_pixture.Visible = false;
+                lowpanel.Visible = false;
                 mainpanel.Visible = false;
                 tabControl.Visible = true;
             }
             else
             {
-                mainpicture.Visible = false;
+                logo_pixture.Visible = false;
+                lowpanel.Visible = false;
                 mainpanel.Visible = false;
                 tabControl.Visible = true;
-                ((WebBrowser)tabControl.SelectedTab.Controls[0]).Navigate(search_string_tb.Text); 
-                var xmlDoc = XDocument.Load(Path.Combine(Environment.CurrentDirectory, HistoryDocXml));
-                xmlDoc.Element("urls").Add(new XElement("url"), new XElement("address", search_string_tb.Text), new XElement("date", DateTime.Now));
-                xmlDoc.Save(Path.Combine(Environment.CurrentDirectory, HistoryDocXml));
+                ((WebBrowser)tabControl.SelectedTab.Controls[0]).Navigate(search_string_tb.Text);
+                Historyxml(search_string_tb.Text, DateTime.Now);
             }
+        }
+        private void search_btn_Click(object sender, EventArgs e)
+        {
+            Searching();
         }
 
         private void back_btn_Click(object sender, EventArgs e)
@@ -142,46 +189,7 @@ namespace Browser_Homework
         {
             if (e.KeyCode == Keys.Enter)
             {
-                if (search_string_tb.Text.Equals("https://www.Frogoogle.ru/"))
-                {
-                    mainpicture.Visible = true;
-                    mainpanel.Visible = true;
-                    tabControl.Visible = false;
-                }
-                else if (String.IsNullOrEmpty(search_string_tb.Text) || search_string_tb.Text.Length > search_string_tb.MaxLength)
-                {
-
-                    MessageBox.Show("Строка пуста");
-
-                    mainpicture.Visible = false;
-                    mainpanel.Visible = false;
-                    tabControl.Visible = true;
-                }
-                else if (tabControl.SelectedTab == null)
-                {
-
-                    MessageBox.Show("Перед тем как сделать поиск, создайте вкладку");
-
-                    mainpicture.Visible = false;
-                    mainpanel.Visible = false;
-                    tabControl.Visible = true;
-                }
-                else
-                {
-                    try
-                    {
-
-                        mainpicture.Visible = false;
-                        mainpanel.Visible = false;
-                        tabControl.Visible = true;
-
-                        ((WebBrowser)tabControl.SelectedTab.Controls[0]).Navigate(search_string_tb.Text);
-                    }
-                    catch
-                    {
-                        MessageBox.Show("Такой страницы не существует");
-                    }
-                }
+                Searching();
             }
 
         }
@@ -223,7 +231,7 @@ namespace Browser_Homework
             }
 
 
-           
+
         }
 
         private void Save_btn_Click(object sender, EventArgs e)
@@ -238,5 +246,10 @@ namespace Browser_Homework
             }
         }
 
+        private void Browser_Load(object sender, EventArgs e)
+        {
+           
+        }
+        
     }
 }

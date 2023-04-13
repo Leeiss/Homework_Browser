@@ -47,10 +47,11 @@
             tabControl = new TabControl();
             toolStrip1 = new ToolStrip();
             mainpanel = new Panel();
-            mainpicture = new PictureBox();
+            lowpanel = new Panel();
+            logo_pixture = new PictureBox();
             search_engine_toolStrip.SuspendLayout();
             mainpanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)mainpicture).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)logo_pixture).BeginInit();
             SuspendLayout();
             // 
             // search_engine_toolStrip
@@ -220,7 +221,8 @@
             // mainpanel
             // 
             mainpanel.BackColor = SystemColors.ButtonHighlight;
-            mainpanel.Controls.Add(mainpicture);
+            mainpanel.Controls.Add(lowpanel);
+            mainpanel.Controls.Add(logo_pixture);
             mainpanel.Controls.Add(toolStrip1);
             mainpanel.Dock = DockStyle.Fill;
             mainpanel.Location = new Point(0, 0);
@@ -228,15 +230,22 @@
             mainpanel.Size = new Size(1438, 903);
             mainpanel.TabIndex = 3;
             // 
-            // mainpicture
+            // lowpanel
             // 
-            mainpicture.Dock = DockStyle.Fill;
-            mainpicture.Image = (Image)resources.GetObject("mainpicture.Image");
-            mainpicture.Location = new Point(0, 25);
-            mainpicture.Name = "mainpicture";
-            mainpicture.Size = new Size(1438, 878);
-            mainpicture.TabIndex = 5;
-            mainpicture.TabStop = false;
+            lowpanel.BackColor = Color.FromArgb(226, 232, 223);
+            lowpanel.Location = new Point(3, 856);
+            lowpanel.Name = "lowpanel";
+            lowpanel.Size = new Size(1485, 25);
+            lowpanel.TabIndex = 6;
+            // 
+            // logo_pixture
+            // 
+            logo_pixture.Image = (Image)resources.GetObject("logo_pixture.Image");
+            logo_pixture.Location = new Point(225, 194);
+            logo_pixture.Name = "logo_pixture";
+            logo_pixture.Size = new Size(985, 327);
+            logo_pixture.TabIndex = 5;
+            logo_pixture.TabStop = false;
             // 
             // Browser
             // 
@@ -251,11 +260,13 @@
             Margin = new Padding(4, 2, 4, 2);
             Name = "Browser";
             Text = "Web-браузер";
+            Load += Browser_Load;
+            Resize += Browser_Resize;
             search_engine_toolStrip.ResumeLayout(false);
             search_engine_toolStrip.PerformLayout();
             mainpanel.ResumeLayout(false);
             mainpanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)mainpicture).EndInit();
+            ((System.ComponentModel.ISupportInitialize)logo_pixture).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -280,6 +291,7 @@
         private ToolStripButton stop_refresh;
         private ToolStrip toolStrip1;
         private Panel mainpanel;
-        private PictureBox mainpicture;
+        private Panel lowpanel;
+        private PictureBox logo_pixture;
     }
 }
