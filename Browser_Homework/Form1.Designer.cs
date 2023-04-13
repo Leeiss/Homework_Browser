@@ -260,7 +260,6 @@
             Margin = new Padding(4, 2, 4, 2);
             Name = "Browser";
             Text = "Web-браузер";
-            Load += Browser_Load;
             Resize += Browser_Resize;
             search_engine_toolStrip.ResumeLayout(false);
             search_engine_toolStrip.PerformLayout();

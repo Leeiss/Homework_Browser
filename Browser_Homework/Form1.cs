@@ -230,8 +230,6 @@ namespace Browser_Homework
                 MessageBox.Show("Сначала откройте какую-нибудь страницу");
             }
 
-
-
         }
 
         private void Save_btn_Click(object sender, EventArgs e)
@@ -246,10 +244,6 @@ namespace Browser_Homework
             }
         }
 
-        private void Browser_Load(object sender, EventArgs e)
-        {
-           
-        }
         
     }
 }
